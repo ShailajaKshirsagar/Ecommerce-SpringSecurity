@@ -1,32 +1,30 @@
 package com.ecommerce.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Customer {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int id;
 
-    private String fname;
+    private String username;
 
-    private String lname;
+    private  String password;
 
-    private  long mobileno;
+    private List<String> roles;
+
 
 }
