@@ -54,7 +54,6 @@ public class SelletController {
 
     //update seller
     public ResponseEntity<Seller> updateSeller(@PathVariable("id") long id,@RequestBody Seller seller){
-
         Seller updatedseller = sellerService.updateSeller( id,seller);
         return new ResponseEntity<>(updatedseller,HttpStatus.OK);
     }
