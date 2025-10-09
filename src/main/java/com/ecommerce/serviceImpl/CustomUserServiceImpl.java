@@ -4,6 +4,7 @@ import com.ecommerce.entity.User;
 import com.ecommerce.repository.UserRepo;
 import com.ecommerce.service.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,7 +39,9 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
             return org.springframework.security.core.userdetails.User.builder()
                     .username(user.getUsername())
                     .password(user.getPassword())
-                    .roles(user.getRoles().toArray(new String[0]))
+                    .roles(user.getRoles().stream()
+                            .map(User.ROLES::name)
+                            .toArray(String[]::new))
                     .build();
         }
         throw new UsernameNotFoundException("User name not found with the given username");
