@@ -26,8 +26,11 @@ public class SpringSecurityConfig
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(customizer ->
-                customizer.requestMatchers("/customer/**").authenticated()
+                customizer.requestMatchers("/customer/**").hasAnyRole("CUSTOMER","ADMIN")
+                        .requestMatchers("/seller/**").hasAnyRole("SELLER","ADMIN")
+                        .requestMatchers("/management/**").hasAnyRole("MANAGEMENT","ADMIN")
                         .anyRequest().permitAll())
+
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable());
