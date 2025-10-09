@@ -1,10 +1,7 @@
 package com.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +21,17 @@ public class User {
 
     private  String password;
 
-    private List<String> roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name= "user_role",joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "roles")
+    @Enumerated(EnumType.STRING)
+    private List<ROLES> roles;
+
+    public enum ROLES{
+        CUSTOMER,
+        MANAGEMENT,
+        SELLER,
+        ADMIN
+    }
 
 }
