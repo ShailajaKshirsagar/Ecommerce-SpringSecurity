@@ -4,7 +4,6 @@ import com.ecommerce.entity.User;
 import com.ecommerce.repository.UserRepo;
 import com.ecommerce.service.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,16 +22,14 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
     @Override
     public String saveUser(User user) {
         //here we need to encrypt the password
-
         user.setPassword(encoder.encode(user.getPassword()));
-
         userRepository.save(user);
         return "User saved successfully with username : " + user.getUsername();
     }
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = userRepository.findByUsername(username);
 
         if(user!=null) {
@@ -46,4 +43,13 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
         }
         throw new UsernameNotFoundException("User name not found with the given username");
     }
+
+    //update
+    @Override
+    public void updatePassword(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        user.setPassword(encoder.encode(password));
+        userRepository.save(user);
+    }
+
 }

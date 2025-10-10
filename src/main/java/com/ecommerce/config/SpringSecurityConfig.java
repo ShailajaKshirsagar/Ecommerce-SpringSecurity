@@ -29,6 +29,7 @@ public class SpringSecurityConfig
                 customizer.requestMatchers("/customer/**").hasAnyRole("CUSTOMER","ADMIN")
                         .requestMatchers("/seller/**").hasAnyRole("SELLER","ADMIN")
                         .requestMatchers("/management/**").hasAnyRole("MANAGEMENT","ADMIN")
+                        .requestMatchers("/user/update/password").hasAnyRole("MANAGEMENT","ADMIN","CUSTOMER","SELLER")
                         .anyRequest().permitAll())
 
                 .httpBasic(Customizer.withDefaults())
@@ -50,7 +51,6 @@ public class SpringSecurityConfig
 
         return authenticationProvider;
     }
-
     @Bean
     public BCryptPasswordEncoder passwordencoder(){
         return new BCryptPasswordEncoder();
