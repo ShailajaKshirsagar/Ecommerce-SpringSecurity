@@ -35,4 +35,13 @@ public class UserController {
         customUserService.updatePassword(loginuser, request.getNewPassword());
         return new ResponseEntity<>("Password updated",HttpStatus.OK);
     }
+
+    //update role
+    @PutMapping("/update/role/{id}")
+    public ResponseEntity<String> updateUserRole(@PathVariable("id") int id,@RequestBody User user){
+
+        String msg = customUserService.updateUserRole(id,user);
+        return new ResponseEntity<>(msg,HttpStatus.OK);
+
+    }
 }

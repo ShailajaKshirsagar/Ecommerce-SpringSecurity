@@ -30,6 +30,7 @@ public class SpringSecurityConfig
                         .requestMatchers("/seller/**").hasAnyRole("SELLER","ADMIN")
                         .requestMatchers("/management/**").hasAnyRole("MANAGEMENT","ADMIN")
                         .requestMatchers("/user/update/password").hasAnyRole("MANAGEMENT","ADMIN","CUSTOMER","SELLER")
+                        .requestMatchers("/user/update/role/*").hasAnyRole("ADMIN")
                         .anyRequest().permitAll())
 
                 .httpBasic(Customizer.withDefaults())
