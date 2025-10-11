@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class CustomUserServiceImpl implements CustomUserService, UserDetailsService
 {
@@ -52,4 +54,14 @@ public class CustomUserServiceImpl implements CustomUserService, UserDetailsServ
         userRepository.save(user);
     }
 
+        @Override
+        public String updateUserRole(int id, User user) {
+
+            User user1 = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User does not exist with this id"));
+
+            user1.setRoles(user.getRoles());
+
+            userRepository.save(user1);
+            return "User Role changed sucsessfully";
+        }
 }
