@@ -26,7 +26,9 @@ public class SpringSecurityConfig
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(customizer ->
-                customizer.requestMatchers("/customer/**").hasAnyRole("CUSTOMER","ADMIN")
+                customizer
+                        .requestMatchers("/swagger-ui/**","/swagger-ui.html","/v2/api-docs","swagger-resources/**", "/webjars/**").authenticated()
+                        .requestMatchers("/customer/**").hasAnyRole("CUSTOMER","ADMIN")
                         .requestMatchers("/seller/**").hasAnyRole("SELLER","ADMIN")
                         .requestMatchers("/management/**").hasAnyRole("MANAGEMENT","ADMIN")
                         .requestMatchers("/user/update/password").hasAnyRole("MANAGEMENT","ADMIN","CUSTOMER","SELLER")
@@ -41,9 +43,11 @@ public class SpringSecurityConfig
         return http.build();
     }
 
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
